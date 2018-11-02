@@ -3,7 +3,6 @@ package fetcher
 import (
 	"bufio"
 	"fmt"
-	"io"
 	"io/ioutil"
 	"net/http"
 
@@ -27,15 +26,16 @@ func Fetch(url string) ([]byte, error) {
 	}
 
 	// package: gopn -g -v golang.org/x/net/html 自动发现网页字体格式（charset）
-	e := determineEncoding(resp.Body)
+	bodyReader := bufio.NewReader(resp.Body)
+	e := determineEncoding(bodyReader)
 	// package: gopm -g -v golang.org/x/text GBK 转 utf-8
 	utf8Reader := transform.NewReader(resp.Body, e.NewDecoder())
 
 	return ioutil.ReadAll(utf8Reader)
 }
 
-func determineEncoding(r io.Reader) encoding.Encoding {
-	bytes, err := bufio.NewReader(r).Peek(1024)
+func determineEncoding(r *bufio.Reader) encoding.Encoding {
+	bytes, err := r.Peek(1024)
 	if err != nil {
 		log.Printf("Fetcher error: %v\n", err)
 		return unicode.UTF8
