@@ -8,33 +8,34 @@ import (
 )
 
 var ageRe = regexp.MustCompile(
-	`<td><span class="label">年龄: </span>([\d]+)岁</td>`)
+	`<div class="m-btn purple" data-v-ff544c08="">[\d]+岁</div>`)
 var heightRe = regexp.MustCompile(
-	`<td><span class="label">身高: </span>([\d]+)CM</td>`)
+	`<div class="m-btn purple" data-v-ff544c08="">[\d]+cm</div>`)
 var incomeRe = regexp.MustCompile(
-	`<td><span class="label">月收入: </span>([^<]+)</td>`)
-var weightRe = regexp.MustCompile(
-	`<td><span class="label">体重: </span><span field="">([\d]+)KG</span></td>`)
-var genderRe = regexp.MustCompile(
-	`<td><span class="label">性别: </span><span field="">([^<]+)</span></td>`)
+	`<div class="m-btn purple" data-v-ff544c08="">月收入:([^<]+)</div>`)
+
+//var weightRe = regexp.MustCompile(
+//	`<td><span class="label">体重: </span><span field="">([\d]+)KG</span></td>`)
+//var genderRe = regexp.MustCompile(
+//	`<td width="180"><span class="grayL">性别：</span>([^<]+)</td>`)
 var xinzuoRe = regexp.MustCompile(
-	`<td><span class="label">星座: </span><span field="">([^<]+)</span></td>`)
+	`<div class="m-btn purple" data-v-ff544c08="">([^<]+)</div>`)
 var marrageRe = regexp.MustCompile(
-	`<td><span class="label">婚况: </span>([^<]+)</td>`)
+	`<div class="m-btn purple" data-v-ff544c08="">([^<]+)</div>`)
 var educationRe = regexp.MustCompile(
-	`<td><span class="label">学历: </span>([^<]+)</td>`)
+	`<div class="m-btn purple" data-v-ff544c08="">([^<]+)</div>`)
 var occupationRe = regexp.MustCompile(
-	`<td><span class="label">职业: </span><span field="">([^<]+)</span></td>`)
+	`<div class="m-btn purple" data-v-ff544c08="">([^<]+)</div>`)
 var hokouRe = regexp.MustCompile(
-	`<td><span class="label">籍贯: </span>([^<]+)</td>`)
+	`<div class="m-btn purple" data-v-ff544c08="">([^<]+)</div>`)
 var houseRe = regexp.MustCompile(
-	`<td><span class="label">住房条件: </span><span field="">([^<]+)</span></td>`)
+	`<div class="m-btn pink" data-v-ff544c08="">([^<]+)</div>`)
 var carRe = regexp.MustCompile(
-	`<td><span class="label">是否购车: </span><span field="">([^<]+)</span></td>`)
+	`<div class="m-btn pink" data-v-ff544c08="">([^<]+)</div>`)
 
-func ParseProfile(contents []byte) engine.ParseResult {
+func ParseProfile(contents []byte, name string) engine.ParseResult {
 	profile := model.Profile{}
-
+	profile.Name = name
 	// 年龄
 	if age, err := strconv.Atoi(extractString(contents, ageRe)); err != nil {
 		profile.Age = age
@@ -44,13 +45,13 @@ func ParseProfile(contents []byte) engine.ParseResult {
 		profile.Height = height
 	}
 	// 体重
-	if weight, err := strconv.Atoi(extractString(contents, weightRe)); err != nil {
-		profile.Weight = weight
-	}
+	//if weight, err := strconv.Atoi(extractString(contents, weightRe)); err != nil {
+	//	profile.Weight = weight
+	//}
 	// 收入
 	profile.Income = extractString(contents, incomeRe)
 	// 性别
-	profile.Gender = extractString(contents, genderRe)
+	//profile.Gender = extractString(contents, genderRe)
 	// 星座
 	profile.Xinzuo = extractString(contents, xinzuoRe)
 	// 婚况
