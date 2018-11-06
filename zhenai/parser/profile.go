@@ -41,6 +41,8 @@ var hokouRe = regexp.MustCompile(
 //	`<div class="m-btn pink" data-v-ff544c08="">([^<]+)</div>`)
 */
 
+// Todo 选择合适的方法获取 div 中的数据
+
 type usermModel struct {
 	name      string
 	age       int
