@@ -112,6 +112,12 @@ func ParseProfile(contents []byte, url string, name string) engine.ParseResult {
 	}
 
 	//matches := guessRe.FundAllSubmatch( contents, -1)
+	//for _, m := range matches {
+	//	result.Requests = append(result.Requests, engine.Request{
+	//		string(m[1]),
+	//		ProfileParser(string(m[2])),
+	//	})
+	//}
 	return result
 }
 
@@ -148,4 +154,10 @@ func splitUserInfo(s string) usermModel {
 	}
 
 	return userinfo
+}
+
+func ProfileParser(name string) engine.ParserFunc {
+	return func(c []byte, url string) engine.ParseResult {
+		return ParseProfile(c, url, name)
+	}
 }
