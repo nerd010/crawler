@@ -41,6 +41,8 @@ var hokouRe = regexp.MustCompile(
 //	`<div class="m-btn pink" data-v-ff544c08="">([^<]+)</div>`)
 */
 
+var idUrlRe = regexp.MustCompile(`http://album.zhenai.com/u/([\d]+)`)
+
 // Todo 选择合适的方法获取 div 中的数据
 
 type usermModel struct {
@@ -57,7 +59,7 @@ type usermModel struct {
 var userBrief = regexp.MustCompile(
 	`<div class="des f-cl" data-v-07a0138b>([^<]+)</div>`)
 
-func ParseProfile(contents []byte, name string) engine.ParseResult {
+func ParseProfile(contents []byte, url string, name string) engine.ParseResult {
 	profile := model.Profile{}
 	profile.Name = name
 
@@ -99,8 +101,17 @@ func ParseProfile(contents []byte, name string) engine.ParseResult {
 	//profile.Car = extractString(contents, carRe)
 
 	result := engine.ParseResult{
-		Items: []interface{}{profile},
+		Items: []engine.Item{
+			{
+				Url:     url,
+				Type:    "zhenai",
+				Id:      extractString([]byte(url), idUrlRe),
+				Payload: profile,
+			},
+		},
 	}
+
+	//matches := guessRe.FundAllSubmatch( contents, -1)
 	return result
 }
 
