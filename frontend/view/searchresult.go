@@ -12,7 +12,7 @@ type SearchResultView struct {
 
 func CreateSearchResultView(filename string) SearchResultView {
 	return SearchResultView{
-		template:template.Must(template.ParseFiles(filename)),
+		template: template.Must(template.ParseFiles(filename)),
 	}
 }
 
