@@ -1,14 +1,16 @@
 package main
 
 import (
+	"crawler/crawler-distributed/config"
 	"crawler/crawler-distributed/persist"
 	"crawler/crawler-distributed/rpcsupport"
+	"fmt"
 	"github.com/olivere/elastic"
 	"log"
 )
 
 func main() {
-	log.Fatal(serveRpc(":1234", "dating_profile"))
+	log.Fatal(serveRpc(fmt.Sprintf(":%d", config.ItemSaverPort), config.ElasticIndex))
 }
 
 func serveRpc(host, index string) error {

@@ -1,9 +1,11 @@
 package main
 
 import (
+	"crawler/crawler-distributed/config"
 	"crawler/crawler-distributed/rpcsupport"
 	"crawler/engine"
 	"crawler/model"
+	"fmt"
 	"testing"
 	"time"
 )
@@ -12,7 +14,7 @@ func TestItemSaver(t *testing.T) {
 	const host = ":1234"
 
 	// start ItemSaverServer
-	go serveRpc(host, "test1")
+	go serveRpc(fmt.Sprintf(":%d", config.ItemSaverPort), "test1")
 	time.Sleep(time.Second)
 	// start ItemSaverClient
 	client, err := rpcsupport.NewClient(host)
@@ -43,7 +45,7 @@ func TestItemSaver(t *testing.T) {
 	}
 
 	result := ""
-	err = client.Call("ItemSaveService.Save", item, &result)
+	err = client.Call(config.ItemSaverRPC, item, &result)
 
 	if err != nil || result != "ok" {
 		t.Errorf("result: %s, err: %s", result, err)
