@@ -12,7 +12,7 @@ func TestParseProfile(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	result := ParseProfile(contents,
+	result := parseProfile(contents,
 		"http://album.zhenai.com/u/1031157293",
 		"没那种命")
 

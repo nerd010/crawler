@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crawler/crawler-distributed/config"
 	"crawler/engine"
 	"crawler/persist"
 	"crawler/scheduler"
@@ -16,11 +17,12 @@ func main() {
 		Scheduler:   &scheduler.QueuedScheduler{},
 		WorkerCount: 100,
 		ItemChan:    itemChan,
+		RequestProcessor: engine.Worker,
 	}
 
 	e.Run(engine.Request{
 		Url:        "http://www.zhenai.com/zhenghun",
-		Parser: engine.NewFuncParser(parser.ParseCityList, "ParseCityList"),
+		Parser: engine.NewFuncParser(parser.ParseCityList, config.ParseCityList),
 	})
 
 	//e.Run(engine.Request{

@@ -28,9 +28,6 @@ func CreateSearchResultHandler(template string) SearchresultHandler {
 		client,
 	}
 }
-// TODO
-// support paging
-// add start page
 
 func (h SearchresultHandler) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	q := strings.TrimSpace(req.FormValue("q"))

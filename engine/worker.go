@@ -5,8 +5,7 @@ import (
 	"log"
 )
 
-func worker(r Request) (ParseResult, error) {
-	log.Printf("Fetching %s", r.Url)
+func Worker(r Request) (ParseResult, error) {
 	body, err := fetcher.Fetch(r.Url)
 	if err != nil {
 		log.Printf("Fetcher : error "+"fetcher url %s: %v", r.Url, err)
